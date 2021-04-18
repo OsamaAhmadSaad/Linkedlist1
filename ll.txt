@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct nodeType
+{
+	int info;
+	struct nodeType *next;
+};
+
+struct nodeType *Head,*Tail;
+int length=0;
+
+void insertAtFirst(int item)
+{
+	struct nodeType *newNode = (struct nodeType*) malloc(sizeof(struct nodeType));
+	newNode->info = item;
+	if (length == 0) {
+		Head = Tail = newNode;
+		newNode->next = NULL;
+	}
+	else {
+		newNode->next = Head;
+		Head = newNode;
+	}
+	length++;
+}
+
+void insertAtEnd(int item)
+{
+	struct nodeType *newNode = (struct nodeType*) malloc(sizeof(struct nodeType));
+	newNode->info = item;
+	if (length == 0) {
+		Head = Tail = newNode;
+		newNode->next = NULL;
+	}
+	else {
+		Tail->next = newNode;
+		newNode->next = NULL;
+		Tail = newNode;
+	}
+	length++;
+}
+
+insertAtPosition(int pos, int item)
+{
+	if (pos < 0 || pos > length)
+		printf("ERORR");
+	else
+	{
+		struct nodeType *newNode = (struct nodeType*) malloc(sizeof(struct nodeType));
+	    newNode->info = item;
+		if (pos == 0) //insert at the begining
+			insertAtFirst(item);
+		else if (pos == length) //insert at the end;
+			insertAtEnd(item);
+		else
+		{
+			struct nodeType *temp = Head;
+			for (int k = 1; k < pos; k++)
+				temp = temp->next;
+
+			newNode->next = temp->next;
+		    temp->next = newNode;
+			length++;
+		}
+
+	}
+}
+int main()
+{
+
+    insertAtFirst(10);
+    insertAtFirst(5);
+    insertAtFirst(5);
+    insertAtFirst(8);
+    insertAtEnd(2);
+    insertAtPosition(4,1);
+    printf("%d",Head->info);
+    printf("%d",Tail->info);
+    printf("%d",length);
+    
+
+    return 0;
+}
